@@ -1,0 +1,16 @@
+C:\Users\eric9\source\repos\MvcPeerAssessment\MvcPeerAssessment\bin\Debug\netcoreapp2.1\MvcPeerAssessment.deps.json
+C:\Users\eric9\source\repos\MvcPeerAssessment\MvcPeerAssessment\bin\Debug\netcoreapp2.1\MvcPeerAssessment.runtimeconfig.json
+C:\Users\eric9\source\repos\MvcPeerAssessment\MvcPeerAssessment\bin\Debug\netcoreapp2.1\MvcPeerAssessment.runtimeconfig.dev.json
+C:\Users\eric9\source\repos\MvcPeerAssessment\MvcPeerAssessment\bin\Debug\netcoreapp2.1\MvcPeerAssessment.dll
+C:\Users\eric9\source\repos\MvcPeerAssessment\MvcPeerAssessment\bin\Debug\netcoreapp2.1\MvcPeerAssessment.pdb
+C:\Users\eric9\source\repos\MvcPeerAssessment\MvcPeerAssessment\obj\Debug\netcoreapp2.1\MvcPeerAssessment.csproj.AssemblyReference.cache
+C:\Users\eric9\source\repos\MvcPeerAssessment\MvcPeerAssessment\obj\Debug\netcoreapp2.1\MvcPeerAssessment.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\eric9\source\repos\MvcPeerAssessment\MvcPeerAssessment\obj\Debug\netcoreapp2.1\MvcPeerAssessment.AssemblyInfoInputs.cache
+C:\Users\eric9\source\repos\MvcPeerAssessment\MvcPeerAssessment\obj\Debug\netcoreapp2.1\MvcPeerAssessment.AssemblyInfo.cs
+C:\Users\eric9\source\repos\MvcPeerAssessment\MvcPeerAssessment\obj\Debug\netcoreapp2.1\MvcPeerAssessment.csproj.CoreCompileInputs.cache
+C:\Users\eric9\source\repos\MvcPeerAssessment\MvcPeerAssessment\obj\Debug\netcoreapp2.1\MvcPeerAssessment.RazorAssemblyInfo.cache
+C:\Users\eric9\source\repos\MvcPeerAssessment\MvcPeerAssessment\obj\Debug\netcoreapp2.1\MvcPeerAssessment.RazorAssemblyInfo.cs
+C:\Users\eric9\source\repos\MvcPeerAssessment\MvcPeerAssessment\obj\Debug\netcoreapp2.1\MvcPeerAssessment.RazorTargetAssemblyInfo.cache
+C:\Users\eric9\source\repos\MvcPeerAssessment\MvcPeerAssessment\obj\Debug\netcoreapp2.1\MvcPeerAssessment.dll
+C:\Users\eric9\source\repos\MvcPeerAssessment\MvcPeerAssessment\obj\Debug\netcoreapp2.1\MvcPeerAssessment.pdb
+C:\Users\eric9\source\repos\MvcPeerAssessment\MvcPeerAssessment\obj\Debug\netcoreapp2.1\MvcPeerAssessment.genruntimeconfig.cache
