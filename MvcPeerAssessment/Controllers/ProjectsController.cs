@@ -45,5 +45,23 @@ namespace MvcPeerAssessment.Controllers
                 return null;
             }
         }
+
+        [HttpDelete]
+        [Route("api/projects")]
+        public int Delete(int ProjectID)
+        {
+            PeerAssessmentDbContext db = new PeerAssessmentDbContext();
+            Project existingProject = db.Projects.Where(temp => temp.ProjectID == ProjectID).FirstOrDefault();
+            if (existingProject != null)
+            {
+                db.Projects.Remove(existingProject);
+                db.SaveChanges();
+                return ProjectID;
+            }
+            else
+            {
+                return -1;
+            }
+        }
     }
 }
