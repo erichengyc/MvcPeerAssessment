@@ -25,10 +25,10 @@ namespace MvcPeerAssessment.Controllers
             if (searchBy == "ProjectID")
                 projects = db.Projects.Where(temp => temp.ProjectID.ToString().Contains(searchText)).ToList();
             else if (searchBy == "ProjectName")
-                projects = db.Projects.Where(temp => temp.ProjectName.ToString().Contains(searchText)).ToList();
-            else if (searchBy == "DateOfStart")
+                projects = db.Projects.Where(temp => temp.ProjectName.Contains(searchText)).ToList();
+            if (searchBy == "DateOfStart")
                 projects = db.Projects.Where(temp => temp.DateOfStart.ToString().Contains(searchText)).ToList();
-            else if (searchBy == "TeamSize")
+            if (searchBy == "TeamSize")
                 projects = db.Projects.Where(temp => temp.TeamSize.ToString().Contains(searchText)).ToList();
 
             return projects;
