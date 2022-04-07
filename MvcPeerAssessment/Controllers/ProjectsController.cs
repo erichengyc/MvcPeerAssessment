@@ -17,7 +17,7 @@ namespace MvcPeerAssessment.Controllers
         }
 
         [HttpGet]
-        [Route("api/projects/search/{searchby/{searchtext}")]
+        [Route("api/projects/search/{searchby}/{searchtext}")]
         public List<Project> Search(string searchBy, string searchText)
         {
             PeerAssessmentDbContext db = new PeerAssessmentDbContext();
