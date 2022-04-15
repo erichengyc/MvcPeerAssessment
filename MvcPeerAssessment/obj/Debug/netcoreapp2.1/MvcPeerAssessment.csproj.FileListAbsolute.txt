@@ -14,3 +14,4 @@ C:\Users\eric9\source\repos\MvcPeerAssessment\MvcPeerAssessment\obj\Debug\netcor
 C:\Users\eric9\source\repos\MvcPeerAssessment\MvcPeerAssessment\obj\Debug\netcoreapp2.1\MvcPeerAssessment.dll
 C:\Users\eric9\source\repos\MvcPeerAssessment\MvcPeerAssessment\obj\Debug\netcoreapp2.1\MvcPeerAssessment.pdb
 C:\Users\eric9\source\repos\MvcPeerAssessment\MvcPeerAssessment\obj\Debug\netcoreapp2.1\MvcPeerAssessment.genruntimeconfig.cache
+C:\Users\eric9\source\repos\MvcPeerAssessment\MvcPeerAssessment\bin\Debug\netcoreapp2.1\appsettings.json

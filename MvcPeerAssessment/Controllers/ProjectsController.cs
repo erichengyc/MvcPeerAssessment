@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MvcPeerAssessment.Identity;
 using MvcPeerAssessment.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,17 @@ namespace MvcPeerAssessment.Controllers
 {
     public class ProjectsController : Controller
     {
+        private ApplicationDbContext db;
+
+        public ProjectsController(ApplicationDbContext db)
+        {
+            this.db = db;
+        }
+
         [HttpGet]
         [Route("api/projects")]
         public List<Project> Get()
         {
-            PeerAssessmentDbContext db = new PeerAssessmentDbContext();
             List<Project> projects = db.Projects.ToList();
             return projects;
         }
@@ -20,7 +27,6 @@ namespace MvcPeerAssessment.Controllers
         [Route("api/projects/search/{searchby}/{searchtext}")]
         public List<Project> Search(string searchBy, string searchText)
         {
-            PeerAssessmentDbContext db = new PeerAssessmentDbContext();
             List<Project> projects = null;
             if (searchBy == "ProjectID")
                 projects = db.Projects.Where(temp => temp.ProjectID.ToString().Contains(searchText)).ToList();
@@ -38,7 +44,6 @@ namespace MvcPeerAssessment.Controllers
         [Route("api/projects")]
         public Project Post([FromBody]Project project)
         {
-            PeerAssessmentDbContext db = new PeerAssessmentDbContext();
             db.Projects.Add(project);
             db.SaveChanges();
             return project;
@@ -48,7 +53,6 @@ namespace MvcPeerAssessment.Controllers
         [Route("api/projects")]
         public Project Put([FromBody] Project project)
         {
-            PeerAssessmentDbContext db = new PeerAssessmentDbContext();
             Project existingProject = db.Projects.Where(temp => temp.ProjectID == project.ProjectID).FirstOrDefault();
             if(existingProject != null)
             {
@@ -68,7 +72,6 @@ namespace MvcPeerAssessment.Controllers
         [Route("api/projects")]
         public int Delete(int ProjectID)
         {
-            PeerAssessmentDbContext db = new PeerAssessmentDbContext();
             Project existingProject = db.Projects.Where(temp => temp.ProjectID == ProjectID).FirstOrDefault();
             if (existingProject != null)
             {

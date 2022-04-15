@@ -16,14 +16,6 @@ namespace MvcPeerAssessment.Models
         public int TeamSize { get; set; }
     }
 
-    public class PeerAssessmentDbContext: DbContext
-    {
-        public DbSet<Project> Projects { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("data source=localhost\\SQLEXPRESS; integrated security=yes; initial catalog=PeerAssessment");
-        }
-    }
+    
 }
+
