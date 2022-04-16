@@ -3,9 +3,11 @@ using MvcPeerAssessment.Identity;
 using MvcPeerAssessment.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MvcPeerAssessment.Controllers
 {
+    [Authorize]
     public class ProjectsController : Controller
     {
         private ApplicationDbContext db;
@@ -17,6 +19,7 @@ namespace MvcPeerAssessment.Controllers
 
         [HttpGet]
         [Route("api/projects")]
+        [Authorize]
         public List<Project> Get()
         {
             List<Project> projects = db.Projects.ToList();
