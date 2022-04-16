@@ -605,9 +605,6 @@ class ProjectsComponent {
     ngOnInit() {
         this.projectsService.getAllProjects().subscribe((response) => {
             this.projects = response;
-        }, (error) => {
-            console.log(error);
-            alert("Authentication failed");
         });
     }
     onSaveClick() {
@@ -1019,15 +1016,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppModule": () => (/* binding */ AppModule)
 /* harmony export */ });
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/platform-browser */ 4293);
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/platform-browser */ 4293);
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app-routing.module */ 158);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app.component */ 5041);
 /* harmony import */ var _admin_admin_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./admin/admin.module */ 7095);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common/http */ 8784);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common/http */ 8784);
 /* harmony import */ var _login_login_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./login/login.component */ 8458);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/forms */ 587);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/forms */ 587);
 /* harmony import */ var _jwt_interceptor_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./jwt-interceptor.service */ 1533);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _jwt_authorized_interceptor_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./jwt-authorized-interceptor.service */ 9996);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 3184);
+
 
 
 
@@ -1040,26 +1039,31 @@ __webpack_require__.r(__webpack_exports__);
 class AppModule {
 }
 AppModule.ɵfac = function AppModule_Factory(t) { return new (t || AppModule)(); };
-AppModule.ɵmod = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent] });
-AppModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineInjector"]({ providers: [
+AppModule.ɵmod = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent] });
+AppModule.ɵinj = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineInjector"]({ providers: [
         {
-            provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_6__.HTTP_INTERCEPTORS,
+            provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_7__.HTTP_INTERCEPTORS,
             useClass: _jwt_interceptor_service__WEBPACK_IMPORTED_MODULE_4__.JwtInterceptorService,
             multi: true
         },
+        {
+            provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_7__.HTTP_INTERCEPTORS,
+            useClass: _jwt_authorized_interceptor_service__WEBPACK_IMPORTED_MODULE_5__.JwtAuthorizedInterceptorService,
+            multi: true
+        },
     ], imports: [[
-            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_7__.BrowserModule,
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_8__.BrowserModule,
             _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule,
-            _angular_common_http__WEBPACK_IMPORTED_MODULE_6__.HttpClientModule,
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_7__.HttpClientModule,
             _admin_admin_module__WEBPACK_IMPORTED_MODULE_2__.AdminModule,
-            _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormsModule
+            _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormsModule
         ]] });
-(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent,
-        _login_login_component__WEBPACK_IMPORTED_MODULE_3__.LoginComponent], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_7__.BrowserModule,
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent,
+        _login_login_component__WEBPACK_IMPORTED_MODULE_3__.LoginComponent], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_8__.BrowserModule,
         _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule,
-        _angular_common_http__WEBPACK_IMPORTED_MODULE_6__.HttpClientModule,
+        _angular_common_http__WEBPACK_IMPORTED_MODULE_7__.HttpClientModule,
         _admin_admin_module__WEBPACK_IMPORTED_MODULE_2__.AdminModule,
-        _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormsModule] }); })();
+        _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormsModule] }); })();
 
 
 /***/ }),
@@ -1105,6 +1109,46 @@ class DashboardService {
 }
 DashboardService.ɵfac = function DashboardService_Factory(t) { return new (t || DashboardService)(); };
 DashboardService.ɵprov = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: DashboardService, factory: DashboardService.ɵfac });
+
+
+/***/ }),
+
+/***/ 9996:
+/*!*******************************************************!*\
+  !*** ./src/app/jwt-authorized-interceptor.service.ts ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "JwtAuthorizedInterceptorService": () => (/* binding */ JwtAuthorizedInterceptorService)
+/* harmony export */ });
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ 8784);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ 9337);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 3184);
+
+
+
+class JwtAuthorizedInterceptorService {
+    constructor() { }
+    intercept(request, next) {
+        return next.handle(request).pipe((0,rxjs__WEBPACK_IMPORTED_MODULE_0__.tap)((event) => {
+            if (event instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpResponse) {
+                //do something with response
+            }
+        }, (error) => {
+            if (error instanceof _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpErrorResponse) {
+                if (error.status == 401) {
+                    console.log(error);
+                    alert("401 UnAuthorized");
+                }
+            }
+        }));
+    }
+    ;
+}
+JwtAuthorizedInterceptorService.ɵfac = function JwtAuthorizedInterceptorService_Factory(t) { return new (t || JwtAuthorizedInterceptorService)(); };
+JwtAuthorizedInterceptorService.ɵprov = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineInjectable"]({ token: JwtAuthorizedInterceptorService, factory: JwtAuthorizedInterceptorService.ɵfac, providedIn: 'root' });
 
 
 /***/ }),
