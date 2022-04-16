@@ -889,9 +889,9 @@ __webpack_require__.r(__webpack_exports__);
 const routes = [
     { path: "", redirectTo: "login", pathMatch: "full" },
     { path: "login", component: _login_login_component__WEBPACK_IMPORTED_MODULE_3__.LoginComponent },
-    { path: "dashboard", component: _admin_dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_0__.DashboardComponent, canActivate: [_can_activate_guard_service__WEBPACK_IMPORTED_MODULE_4__.CanActivateGuardService] },
+    { path: "dashboard", component: _admin_dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_0__.DashboardComponent, canActivate: [_can_activate_guard_service__WEBPACK_IMPORTED_MODULE_4__.CanActivateGuardService], data: { expectedRole: "admin" } },
     { path: "about", component: _admin_about_about_component__WEBPACK_IMPORTED_MODULE_1__.AboutComponent },
-    { path: "projects", component: _admin_projects_projects_component__WEBPACK_IMPORTED_MODULE_2__.ProjectsComponent, canActivate: [_can_activate_guard_service__WEBPACK_IMPORTED_MODULE_4__.CanActivateGuardService] },
+    { path: "projects", component: _admin_projects_projects_component__WEBPACK_IMPORTED_MODULE_2__.ProjectsComponent, canActivate: [_can_activate_guard_service__WEBPACK_IMPORTED_MODULE_4__.CanActivateGuardService], data: { expectedRole: "admin" } },
 ];
 class AppRoutingModule {
 }
@@ -1093,17 +1093,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 3184);
 /* harmony import */ var _login_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./login.service */ 5619);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ 2816);
+/* harmony import */ var _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @auth0/angular-jwt */ 4198);
+
 
 
 
 class CanActivateGuardService {
-    constructor(loginService, router) {
+    constructor(loginService, router, jwtHelperService) {
         this.loginService = loginService;
         this.router = router;
+        this.jwtHelperService = jwtHelperService;
     }
     canActivate(route) {
-        console.log(this.router.url);
-        if (this.loginService.isAuthenticated()) {
+        //console.log(this.router.url);
+        var token = sessionStorage.getItem("currentUser") ? JSON.parse(sessionStorage.getItem("currentUser")).token : null;
+        //console.log(this.jwtHelperService.decodeToken(token));
+        if (this.loginService.isAuthenticated() && this.jwtHelperService.decodeToken(token).role == route.data['expectedRole']) {
             return true; //the user can navigate to the particular route
         }
         else {
@@ -1112,7 +1117,7 @@ class CanActivateGuardService {
         }
     }
 }
-CanActivateGuardService.ɵfac = function CanActivateGuardService_Factory(t) { return new (t || CanActivateGuardService)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_login_service__WEBPACK_IMPORTED_MODULE_0__.LoginService), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__.Router)); };
+CanActivateGuardService.ɵfac = function CanActivateGuardService_Factory(t) { return new (t || CanActivateGuardService)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_login_service__WEBPACK_IMPORTED_MODULE_0__.LoginService), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_angular_router__WEBPACK_IMPORTED_MODULE_2__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_3__.JwtHelperService)); };
 CanActivateGuardService.ɵprov = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjectable"]({ token: CanActivateGuardService, factory: CanActivateGuardService.ɵfac, providedIn: 'root' });
 
 

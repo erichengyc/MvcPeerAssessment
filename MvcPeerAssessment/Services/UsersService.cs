@@ -30,9 +30,10 @@ namespace MvcPeerAssessment.Services
             var result = await _applicationSignInManager.PasswordSignInAsync(loginViewModel.Username, loginViewModel.Password, false, false);
             if (result.Succeeded)
             {
-
                 var applicationUser = await _applicationUserManager.FindByNameAsync(loginViewModel.Username);
                 applicationUser.PasswordHash = null;
+                if (await this._applicationUserManager.IsInRoleAsync(applicationUser, "Admin")) applicationUser.Role = "Admin";
+                else if (await this._applicationUserManager.IsInRoleAsync(applicationUser, "Employee")) applicationUser.Role = "Employee";
 
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = System.Text.Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -40,7 +41,8 @@ namespace MvcPeerAssessment.Services
                 {
                     Subject = new ClaimsIdentity(new Claim[] {
                         new Claim(ClaimTypes.Name, applicationUser.Id),
-                        new Claim(ClaimTypes.Email, applicationUser.Email)
+                        new Claim(ClaimTypes.Email, applicationUser.Email),
+                        new Claim(ClaimTypes.Role, applicationUser.Role)
                     }),
                     Expires = System.DateTime.UtcNow.AddHours(8),
                     SigningCredentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(key), Microsoft.IdentityModel.Tokens.SecurityAlgorithms.HmacSha256Signature)
