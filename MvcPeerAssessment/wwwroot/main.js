@@ -605,6 +605,9 @@ class ProjectsComponent {
     ngOnInit() {
         this.projectsService.getAllProjects().subscribe((response) => {
             this.projects = response;
+        }, (error) => {
+            console.log(error);
+            alert("Authentication failed");
         });
     }
     onSaveClick() {
@@ -1144,11 +1147,13 @@ class LoginService {
             .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_0__.map)(user => {
             if (user) {
                 this.currentUserName = user.userName;
+                sessionStorage['currentUser'] = JSON.stringify(user);
             }
             return user;
         }));
     }
     Logout() {
+        sessionStorage.removeItem("currentUser");
         this.currentUserName = null;
     }
 }
@@ -1264,9 +1269,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ProjectsService": () => (/* binding */ ProjectsService)
 /* harmony export */ });
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ 635);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 3184);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ 8784);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/common/http */ 8784);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ 635);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 3184);
+
 
 
 
@@ -1275,8 +1281,15 @@ class ProjectsService {
         this.httpClient = httpClient;
     }
     getAllProjects() {
-        return this.httpClient.get("http://localhost:3000/projects", { responseType: "json" })
-            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_0__.map)((data) => {
+        var currentUser = { token: "" };
+        var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_0__.HttpHeaders();
+        headers = headers.set("Authorization", "Bearer");
+        if (sessionStorage['currentUser'] != null) {
+            currentUser = JSON.parse(sessionStorage['currentUser']);
+            headers = headers.set("Authorization", "Bearer " + currentUser.token);
+        }
+        return this.httpClient.get("/api/projects", { headers: headers, responseType: "json" })
+            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_1__.map)((data) => {
             for (let i = 0; i > data.length; i++) {
                 data[i].teamSize = data[i].teamSize * 100;
             }
@@ -1284,20 +1297,20 @@ class ProjectsService {
         }));
     }
     insertProject(newProject) {
-        return this.httpClient.post("http://localhost:3000/projects", newProject, { responseType: "json" });
+        return this.httpClient.post("/api/projects", newProject, { responseType: "json" });
     }
     updateProject(existingProject) {
-        return this.httpClient.put("http://localhost:3000/projects" + existingProject.projectID, existingProject, { responseType: "json" });
+        return this.httpClient.put("/api/projects" + existingProject.projectID, existingProject, { responseType: "json" });
     }
     deleteProject(ProjectID) {
-        return this.httpClient.delete("http://localhost:3000/projects/" + ProjectID);
+        return this.httpClient.delete("/api/projects/" + ProjectID);
     }
     SearchProject(searchBy, searchText) {
-        return this.httpClient.get("http://localhost:3000/projects/search/" + searchBy + "/" + searchText, { responseType: "json" });
+        return this.httpClient.get("/api/projects/search/" + searchBy + "/" + searchText, { responseType: "json" });
     }
 }
-ProjectsService.ɵfac = function ProjectsService_Factory(t) { return new (t || ProjectsService)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpClient)); };
-ProjectsService.ɵprov = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjectable"]({ token: ProjectsService, factory: ProjectsService.ɵfac, providedIn: 'root' });
+ProjectsService.ɵfac = function ProjectsService_Factory(t) { return new (t || ProjectsService)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_0__.HttpClient)); };
+ProjectsService.ɵprov = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineInjectable"]({ token: ProjectsService, factory: ProjectsService.ɵfac, providedIn: 'root' });
 
 
 /***/ }),
